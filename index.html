@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CBL Soccer - Giày Thể Thao Cao Cấp</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    
+    <nav class="navbar">
+        <ul class="menu-links">
+            <li onclick="showSection(0)">Trang Chủ</li>
+            <li onclick="showSection(1)">Sản Phẩm</li>
+            <li onclick="showSection(2)">Thông Tin</li>
+        </ul>
+        <div class="cart-icon" onclick="toggleCart()">
+            <i class="fas fa-shopping-cart"></i>
+            <span id="cart-count">0</span>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section class="page active">
+            <div class="hero" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('1images.png');">
+                <h1>NÂNG TẦM BƯỚC CHÂN</h1>
+                <p>Khám phá bộ sưu tập giày thể thao chuyên nghiệp nhất.</p>
+                <button onclick="showSection(1)">Mua Ngay</button>
+            </div>
+        </section>
+
+        <section class="page">
+            <h2 class="section-title">Sản Phẩm Nổi Bật</h2>
+            <div class="product-grid">
+       <div class="product-card">
+            <img src="2images.png" 
+                 alt="Giày 1" 
+                 onclick="showProductDetail('Nike Mercurial', '2.450.000', '39 - 45', 'Giày đá bóng dòng Mercurial – thiên về tốc độ Thiết kế cổ thấp, ôm chân, nhẹ và linh hoạt Trang bị Zoom Air hỗ trợ bật và giảm chấn Upper mỏng cho cảm giác bóng tốt Đế TF phù hợp sân cỏ nhân tạo Phù hợp: tiền đạo, chạy cánh.', '2images.png')" 
+                 style="cursor: pointer;">
+             <h3>Nike Mercurial</h3>
+             <p class="price">2.450.000đ</p>
+             <p class="info">Size: 39 - 45. Độ bền cao, bám sân cực tốt.</p>
+             <button onclick="addToCart('Nike Mercurial', '2.450.000')">Thêm vào giỏ</button>
+       </div>
+
+
+                <div class="product-card">
+                    <img src="3,5images.jpeg" alt="Giày 2" 
+                    onclick="showProductDetail('Nike Mercurial 16', '8.000.000', '40 - 44', 'Nike Mercurial x Patta Zoom Vapor 16 Elite Phiên bản collab giới hạn giữa Nike & Patta Thiết kế wave gợn sóng đặc trưng của Patta Đế trong suốt ánh màu iridescent + Zoom Air Upper mỏng, nhẹ, tối ưu tốc độ Hai chiếc có thể lệch màu trái – phải khác nhau', '3,5images.jpeg')">
+                    <h3>Nike Mercurial 16</h3>
+                    <p class="price">8.000.000đ</p>
+                    <p class="info">Size: 40 - 44. Kiểm soát bóng tối ưu.</p>
+                    <button onclick="addToCart('Nike Mercurial 16', '8.000.000')">Thêm vào giỏ</button>
+                </div>
+
+                <div class="product-card">
+    <img src="4images.png" 
+         alt="Giày 3" 
+         onclick="showProductDetail('Mizuno Alpha 3 Elite', '3.200.000', '38 - 43', 'Dòng giày tốc độ nhẹ nhất của Mizuno (~195g). Upper knit siêu mỏng cho cảm giác bóng chân thật. Đệm Mizuno Enerzy êm ái, hoàn trả lực tốt. Phù hợp cho tiền đạo và cầu thủ chạy cánh.', '4images.png')" 
+         style="cursor: pointer;">
+    
+    <h3>Mizuno Alpha 3 Elite</h3>
+    <p class="price">3.200.000đ</p>
+    <p class="info">Size: 38 - 43. Đệm khí êm ái cho chạy.</p>
+    
+    <button onclick="addToCart('Mizuno Alpha 3 Elite', '3.200.000')">Thêm vào giỏ</button>
+</div>
+<div class="product-card">
+    <img src="5images.jpeg" 
+         alt="Giày 4" 
+         onclick="showProductDetail('Nike Ronaldo 7 (CR7) 2026', '8.000.000', '39 - 45', 'Phiên bản CR7 mới nhất 2026 với thiết kế Retro lấy cảm hứng từ Superfly đời đầu 2009. Upper Flyknit kết hợp cổ cao ôm chân linh hoạt. Đế hiện đại hỗ trợ bứt tốc cực cao. Bên trong có in dòng chữ Made for Greatness.', '5images.jpeg')" 
+         style="cursor: pointer;">
+    <h3>Nike Ronaldo 7</h3>
+    <p class="price">8.000.000đ</p>
+    <p class="info">Size: 39 - 45. Thiết kế ôm chân linh hoạt.</p>
+    
+    <button onclick="addToCart('Nike Ronaldo 7', '8.000.000')">Thêm vào giỏ</button>
+</div>
+
+            </div>
+        </section>
+
+        <section class="page">
+            <div class="contact-info">
+                <h2>VỀ CHÚNG TÔI</h2>
+                <p><strong>Địa chỉ:</strong> 123 Đường Thể Thao, Quận 1, TP. HCM</p>
+                <p><strong>Liên hệ:</strong> 0984.169.335</p>
+                <div class="commitment">
+                    <h3>Cam kết của cửa hàng:</h3>
+                    <ul>
+                        <li>Đúng Với Hình Ảnh 100%</li>
+                        <li>Bảo hành lỗi 1 đổi 1 trong 30 ngày</li>
+                        <li>Giao hàng nhanh toàn quốc</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+    
+    <div id="product-detail-modal" class="modal" style="display:none; position:fixed; z-index:10000; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.8);">
+        <div style="background:white; margin:10% auto; padding:20px; width:90%; max-width:500px; border-radius:15px; position:relative; text-align:center;">
+            <span onclick="closeProductDetail()" style="position:absolute; right:15px; top:10px; cursor:pointer; font-size:30px;">&times;</span>
+            <div id="detail-content"></div>
+        </div>
+    </div>
+    <div id="checkout-modal" class="modal" style="display:none; position:fixed; z-index:11000; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.8);">
+    <div style="background:white; margin:10% auto; padding:25px; width:90%; max-width:400px; border-radius:15px; position:relative;">
+        <span onclick="closeCheckout()" style="position:absolute; right:15px; top:10px; cursor:pointer; font-size:25px;">&times;</span>
+        <h2 style="text-align:center; margin-bottom:20px; color: #333;">Thông Tin Nhận Hàng</h2>
+        <select id="cus-size" style="width:100%; padding:12px; margin-bottom:15px; border:1px solid #ddd; border-radius:8px; box-sizing: border-box; background: white; font-size: 16px;">
+    <option value="">-- Chọn Size Giày --</option>
+    <option value="39">Size 39</option>
+    <option value="40">Size 40</option>
+    <option value="41">Size 41</option>
+    <option value="42">Size 42</option>
+    <option value="43">Size 43</option>
+    <option value="44">Size 44</option>
+    <option value="45">Size 45</option>
+</select>
+
+        <input type="text" id="cus-name" placeholder="Họ và tên" style="width:100%; padding:12px; margin-bottom:15px; border:1px solid #ddd; border-radius:8px; box-sizing: border-box;">
+        <input type="tel" id="cus-phone" placeholder="Số điện thoại" style="width:100%; padding:12px; margin-bottom:15px; border:1px solid #ddd; border-radius:8px; box-sizing: border-box;">
+        <input type="text" id="cus-address" placeholder="Địa chỉ nhận hàng" style="width:100%; padding:12px; margin-bottom:15px; border:1px solid #ddd; border-radius:8px; box-sizing: border-box;">
+        <textarea id="cus-note" placeholder="Ghi chú (Ví dụ: Giao giờ hành chính...)" style="width:100%; padding:12px; margin-bottom:20px; border:1px solid #ddd; border-radius:8px; height:80px; box-sizing: border-box;"></textarea>
+        
+        <button onclick="confirmOrder()" style="width:100%; padding:15px; background:#e67e22; color:white; border:none; border-radius:10px; font-weight:bold; cursor:pointer;">
+            XÁC NHẬN ĐẶT HÀNG
+        </button>
+    </div>
+</div>
+<div id="bill-modal" class="modal" style="display:none; position:fixed; z-index:20000; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.95);">
+    <div style="background:white; margin:15% auto; padding:20px; width:85%; max-width:320px; border-radius:10px; border: 2px dashed #333; font-family: monospace; box-sizing: border-box;">
+        <h2 style="text-align:center; border-bottom: 1px solid #ddd; padding-bottom:10px; margin:0; color: #000;">CBL SOCCER</h2>
+        <p style="text-align:center; font-size:12px; margin: 5px 0;">BIÊN LAI ĐẶT HÀNG</p>
+        <hr>
+        <div id="bill-detail" style="line-height: 1.5; font-size: 13px; color: #000;">
+            </div>
+        <hr>
+        <p style="text-align:center; font-weight:bold; margin-top:10px; margin-bottom: 5px;">Hẹn gặp lại!</p>
+        <p style="text-align:center; font-size:10px; color:#666; margin:0;">(Bill sẽ tự đóng sau 5 giây)</p>
+    </div>
+</div>
+    <div id="cart-modal" class="modal" style="display:none;">
+        <div class="modal-content cart-view">
+            <span class="close-btn" onclick="toggleCart()">&times;</span>
+            <h2>Giỏ hàng của bạn</h2>
+            <div id="cart-items-list">
+                <p style="color: #888; padding: 20px;">Giỏ hàng đang trống...</p>
+            </div>
+            <hr>
+            <div class="cart-total">
+                <h3>Tổng cộng: <span id="total-price">0</span>đ</h3>
+                <button class="btn-order" onclick="checkout()">ĐẶT HÀNG NGAY</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="cart-icon" onclick="toggleCart()">
+        <i class="fas fa-shopping-cart"></i>
+        <span id="cart-count">0</span>
+    </div>
+
+</body>
+</html>
