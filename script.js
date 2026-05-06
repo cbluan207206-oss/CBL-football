@@ -154,23 +154,30 @@ function sendTelegramMessage(message) {
 }
 
 // 8. Hàm hiện thông tin chi tiết (Chỉ giữ lại 1 bản duy nhất)
-function showProductDetail(name, price, size, desc, img) {
+function showProductDetail(name, price, size, description, image) {
     const modal = document.getElementById('product-detail-modal');
     const content = document.getElementById('detail-content');
     
+    // Đưa nội dung vào, chú ý phần mô tả phải nằm trong vùng cuộn
     content.innerHTML = `
-        <img src="${img}" style="width:100%; border-radius:10px; margin-bottom:15px; object-fit:contain; max-height:300px;">
-        <h2 style="color:#333;">${name}</h2>
-        <p style="color:#ff4757; font-size:20px; font-weight:bold;">Giá: ${price}đ</p>
-        <p><b>Size sẵn có:</b> ${size}</p>
-        <p style="color:#666; line-height:1.6; margin:15px 0;">${desc}</p>
-        <button onclick="addToCart('${name}', '${price}'); closeProductDetail()" 
-                style="width:100%; padding:12px; background:#27ae60; color:white; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">
+        <img src="${image}" style="width:100%; border-radius:10px; margin-bottom:15px;">
+        <h2 style="margin-bottom:10px;">${name}</h2>
+        <p style="color:#ff4757; font-weight:bold; font-size:1.2rem; margin-bottom:5px;">${price}đ</p>
+        <p style="margin-bottom:15px;"><strong>Size:</strong> ${size}</p>
+        <div style="background:#f9f9f9; padding:10px; border-radius:8px;">
+            <p>${description}</p>
+        </div>
+        <button onclick="addToCart('${name}', '${price}'); closeProductDetail();" 
+                style="width:100%; padding:15px; background:#27ae60; color:white; border:none; border-radius:10px; font-weight:bold; margin-top:20px; cursor:pointer;">
             THÊM VÀO GIỎ NGAY
         </button>
     `;
+    
     modal.style.display = 'block';
+    // Reset thanh cuộn lên đầu mỗi khi mở sản phẩm mới
+    content.scrollTop = 0;
 }
+
 
 function closeProductDetail() {
     document.getElementById('product-detail-modal').style.display = 'none';
