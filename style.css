@@ -6,11 +6,12 @@
 }
 
 body {
-    overflow: hidden; 
+    /* Bỏ overflow: hidden để trên điện thoại có thể cuộn trang tự nhiên nếu cần */
+    overflow-x: hidden; 
     background: #f0f2f5;
 }
 
-/* 1. Navbar - Cố định độ cao và căn chỉnh lại */
+/* 1. Navbar - Tối ưu cho di động */
 .navbar {
     position: fixed;
     top: 0;
@@ -37,13 +38,10 @@ body {
     text-transform: uppercase;
     color: #333;
     transition: 0.3s;
+    font-size: 14px;
 }
 
-.menu-links li:hover {
-    color: #ff4757;
-}
-
-/* 2. Container và Page - Đảm bảo lật trang full màn hình */
+/* 2. Container và Page */
 .container {
     height: 100vh;
     width: 100vw;
@@ -65,7 +63,8 @@ body {
     opacity: 0;
     visibility: hidden;
     transform: rotateY(-90deg);
-    overflow-y: auto; /* Thêm cái này để nếu nội dung dài vẫn cuộn được trong trang */
+    overflow-y: auto; 
+    padding-top: 70px; /* Tránh bị che bởi Navbar */
 }
 
 .page.active {
@@ -74,7 +73,7 @@ body {
     transform: rotateY(0deg);
 }
 
-/* 3. Trang chủ (Hero) */
+/* 3. Trang chủ (Hero) - Tự điều chỉnh cỡ chữ theo màn hình */
 .hero {
     width: 100%;
     height: 100%;
@@ -86,39 +85,21 @@ body {
     align-items: center;
     color: white;
     text-align: center;
-    padding-top: 70px;
+    padding: 20px;
 }
 
 .hero h1 { 
-    font-size: 4rem; 
+    font-size: clamp(2rem, 8vw, 4rem); /* Tự co giãn chữ */
     margin-bottom: 20px; 
     text-shadow: 2px 2px 15px rgba(0,0,0,0.7);
 }
 
 .hero p {
-    font-size: 1.5rem;
+    font-size: clamp(1rem, 4vw, 1.5rem);
     margin-bottom: 30px;
-    text-shadow: 1px 1px 10px rgba(0,0,0,0.5);
 }
 
-.hero button {
-    padding: 15px 40px;
-    font-size: 1.2rem;
-    background: #ff4757;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 50px;
-    font-weight: bold;
-    transition: 0.3s;
-}
-
-.hero button:hover {
-    background: #ff6b81;
-    transform: scale(1.1);
-}
-
-/* 4. Sửa Lưới sản phẩm - Gộp các đoạn trùng lặp */
+/* 4. Lưới sản phẩm - Vuốt ngang cực mượt trên điện thoại */
 .product-grid {
     display: flex;
     gap: 20px;
@@ -126,29 +107,20 @@ body {
     width: 100%;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-    cursor: grab;
-    user-select: none;
     -webkit-overflow-scrolling: touch;
 }
 
-.product-grid:active {
-    cursor: grabbing;
-}
-
-.product-grid::-webkit-scrollbar {
-    display: none;
-}
+.product-grid::-webkit-scrollbar { display: none; }
 
 .product-card {
-    flex: 0 0 300px;
+    flex: 0 0 280px; /* Độ rộng thẻ sản phẩm phù hợp mọi màn hình */
     scroll-snap-align: center;
     background: white;
-    padding: 20px;
+    padding: 15px;
     border-radius: 15px;
     text-align: center;
     box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-    height: 480px; /* Giữ chiều cao cố định như bạn muốn */
+    height: 480px; 
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -156,95 +128,12 @@ body {
 
 .product-card img {
     width: 100%;
-    height: 250px;
-    object-fit: contain; /* Sửa thành contain để giày không bị mất mũi/gót */
-    margin-bottom: 15px;
-}
-
-/* 5. Giỏ hàng & Icon */
-.cart-icon {
-    font-size: 1.5rem;
-    position: relative;
-}
-
-#cart-count {
-    position: absolute;
-    top: -5px;
-    right: -12px;
-    background: #ff4757;
-    color: white;
-    font-size: 11px;
-    width: 18px;
-    height: 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-}
-
-.cart-view {
-    position: fixed; /* Đổi sang fixed để nó luôn nổi trên các trang */
-    right: 20px;
-    top: 80px;
-    width: 100%;
-    max-width: 350px;
-    background: white;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    z-index: 1001;
-}
-
-#cart-items-list {
-    max-height: 300px;
-    overflow-y: auto;
-    margin: 15px 0;
-    text-align: left;
-}
-
-.cart-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 0;
-    border-bottom: 1px solid #eee;
-}
-
-.cart-total {
-    padding-top: 15px;
-    text-align: right;
-    font-weight: bold;
-}
-
-.btn-order {
-    width: 100%;
-    padding: 12px;
-    background: #27ae60;
-    color: white;
-    border: none;
-    border-radius: 8px;
+    height: 200px;
+    object-fit: contain;
     cursor: pointer;
-    font-weight: bold;
-    margin-top: 10px;
 }
 
-.btn-cancel {
-    background-color: #ff4747;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: 0.3s;
-}
-
-.btn-cancel:hover {
-    background-color: #cc0000;
-    transform: scale(1.1);
-}
-
-/* 6. Modal */
+/* 5. Giỏ hàng & Modal - Tối ưu kéo cuộn */
 .modal {
     display: none; 
     position: fixed;
@@ -253,15 +142,65 @@ body {
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0,0,0,0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .modal-content {
     background-color: white;
-    margin: 15% auto;
-    padding: 20px;
     width: 90%;
-    max-width: 400px;
-    border-radius: 10px;
-    text-align: center;
+    max-width: 450px;
+    max-height: 85vh; /* Không tràn quá màn hình */
+    border-radius: 20px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+#detail-content {
+    overflow-y: auto; /* Cho phép kéo lên xuống để xem mô tả dài */
+    padding-right: 5px;
+    text-align: left;
+    white-space: pre-line;
+    line-height: 1.5;
+}
+
+/* Tùy chỉnh thanh cuộn nhỏ cho đẹp */
+#detail-content::-webkit-scrollbar { width: 4px; }
+#detail-content::-webkit-scrollbar-thumb { background: #ff4757; border-radius: 10px; }
+
+/* 6. RESPONSIVE - PHẦN QUAN TRỌNG NHẤT CHO TẤT CẢ THIẾT BỊ */
+
+/* Dành cho máy tính bảng (iPad) và điện thoại nằm ngang */
+@media (max-width: 1024px) {
+    .navbar { padding: 0 20px; }
+    .product-grid { padding: 20px; }
+}
+
+/* Dành cho điện thoại di động (iPhone/Samsung/...) */
+@media (max-width: 768px) {
+    .menu-links { gap: 15px; }
+    .menu-links li { font-size: 12px; }
+    
+    .product-card {
+        flex: 0 0 85%; /* Hiện 1 card rưỡi để khách biết là phải vuốt ngang */
+    }
+    
+    .modal-content {
+        width: 95%;
+        margin: 0;
+    }
+    
+    .hero h1 { line-height: 1.2; }
+}
+
+/* Dành cho điện thoại siêu nhỏ */
+@media (max-width: 380px) {
+    .menu-links { display: none; } /* Ẩn menu chữ nếu màn hình quá chật */
+    .navbar { justify-content: center; }
+    .cart-icon { position: absolute; right: 20px; }
 }
