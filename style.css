@@ -10,12 +10,12 @@ body {
     background: #f0f2f5;
 }
 
-/* 1. Sửa Navbar - Cố định độ cao và căn chỉnh lại */
+/* 1. Navbar - Cố định độ cao và căn chỉnh lại */
 .navbar {
     position: fixed;
     top: 0;
     width: 100%;
-    height: 70px; /* Cố định độ cao để không đè vào nội dung */
+    height: 70px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -43,7 +43,7 @@ body {
     color: #ff4757;
 }
 
-/* 2. Sửa Container và Page - Đảm bảo lật trang full màn hình */
+/* 2. Container và Page - Đảm bảo lật trang full màn hình */
 .container {
     height: 100vh;
     width: 100vw;
@@ -54,17 +54,18 @@ body {
 .page {
     position: absolute;
     width: 100%;
-    height: 100vh; /* Quan trọng: Phải cao 100% màn hình */
+    height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Đưa nội dung vào chính giữa dọc */
-    align-items: center;     /* Đưa nội dung vào chính giữa ngang */
+    justify-content: center;
+    align-items: center;
     background: #f4f4f4;
     transition: all 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
     transform-origin: left;
     opacity: 0;
     visibility: hidden;
     transform: rotateY(-90deg);
+    overflow-y: auto; /* Thêm cái này để nếu nội dung dài vẫn cuộn được trong trang */
 }
 
 .page.active {
@@ -73,7 +74,7 @@ body {
     transform: rotateY(0deg);
 }
 
-/* 3. Sửa Trang chủ (Hero) - Để ảnh nền phủ kín và chữ nổi bật */
+/* 3. Trang chủ (Hero) */
 .hero {
     width: 100%;
     height: 100%;
@@ -81,17 +82,17 @@ body {
     background-position: center;
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Đảm bảo chữ nhảy ra giữa */
+    justify-content: center;
     align-items: center;
     color: white;
     text-align: center;
-    padding-top: 70px; /* Tránh bị Navbar che mất */
+    padding-top: 70px;
 }
 
 .hero h1 { 
     font-size: 4rem; 
     margin-bottom: 20px; 
-    text-shadow: 2px 2px 15px rgba(0,0,0,0.7); /* Thêm bóng để dễ đọc chữ */
+    text-shadow: 2px 2px 15px rgba(0,0,0,0.7);
 }
 
 .hero p {
@@ -107,7 +108,7 @@ body {
     color: white;
     border: none;
     cursor: pointer;
-    border-radius: 50px; /* Bo tròn nút cho hiện đại */
+    border-radius: 50px;
     font-weight: bold;
     transition: 0.3s;
 }
@@ -117,30 +118,37 @@ body {
     transform: scale(1.1);
 }
 
-/* 4. Sửa Lưới sản phẩm - Để các sản phẩm thẳng hàng */
-/* Lưới sản phẩm - Chuyển sang dạng lướt qua lại */
+/* 4. Sửa Lưới sản phẩm - Gộp các đoạn trùng lặp */
 .product-grid {
-    display: flex; /* Đổi từ grid sang flex để dàn hàng ngang */
+    display: flex;
     gap: 20px;
     padding: 20px 50px;
     width: 100%;
-    overflow-x: auto; /* Cho phép lướt (cuộn) ngang */
-    scroll-snap-type: x mandatory; /* Giúp khi lướt sẽ dừng đúng giữa ô sản phẩm */
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    cursor: grab;
+    user-select: none;
+    -webkit-overflow-scrolling: touch;
+}
+
+.product-grid:active {
+    cursor: grabbing;
 }
 
 .product-grid::-webkit-scrollbar {
-    display: none; /* Ẩn thanh cuộn trên điện thoại/Chrome */
+    display: none;
 }
 
 .product-card {
-    flex: 0 0 300px; /* Cố định chiều rộng mỗi ô là 300px để lướt */
-    scroll-snap-align: center; /* Khi dừng lại sẽ nằm giữa màn hình */
+    flex: 0 0 300px;
+    scroll-snap-align: center;
     background: white;
     padding: 20px;
     border-radius: 15px;
     text-align: center;
     box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-    height: 480px; /* Chiều cao cố định để các ô bằng nhau */
+    height: 480px; /* Giữ chiều cao cố định như bạn muốn */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -148,31 +156,12 @@ body {
 
 .product-card img {
     width: 100%;
-    height: 250px; /* Tăng chiều cao ảnh cho đẹp */
-    object-fit: cover; /* Ảnh phủ kín khung */
-    border-radius: 10px;
-}
-
-.product-card {
-    background: white;
-    padding: 20px;
-    border-radius: 15px;
-    text-align: center;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-    height: 100%; /* Đảm bảo các ô cao bằng nhau */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.product-card img {
-    width: 100%;
-    height: 200px;
-    object-fit: contain; /* Ảnh giày không bị méo */
+    height: 250px;
+    object-fit: contain; /* Sửa thành contain để giày không bị mất mũi/gót */
     margin-bottom: 15px;
 }
 
-/* Giỏ hàng góc phải */
+/* 5. Giỏ hàng & Icon */
 .cart-icon {
     font-size: 1.5rem;
     position: relative;
@@ -192,12 +181,18 @@ body {
     justify-content: center;
     border-radius: 50%;
 }
-/* Cửa sổ giỏ hàng */
+
 .cart-view {
-    max-width: 400px !important;
-    margin-right: 20px !important;
-    margin-top: 80px !important;
-    float: right; /* Đẩy giỏ hàng sang bên phải giống các web xịn */
+    position: fixed; /* Đổi sang fixed để nó luôn nổi trên các trang */
+    right: 20px;
+    top: 80px;
+    width: 100%;
+    max-width: 350px;
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    z-index: 1001;
 }
 
 #cart-items-list {
@@ -218,52 +213,23 @@ body {
 .cart-total {
     padding-top: 15px;
     text-align: right;
+    font-weight: bold;
 }
 
 .btn-order {
-    background: #27ae60 !important; /* Màu xanh lá cho nút đặt hàng */
+    width: 100%;
+    padding: 12px;
+    background: #27ae60;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
     margin-top: 10px;
 }
-/* CSS để bảng hiện ra chính giữa */
-.modal {
-    display: none; 
-    position: fixed;
-    z-index: 9999;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.5); /* Nền đen mờ */
-}
 
-.modal-content {
-    background-color: white;
-    margin: 15% auto;
-    padding: 20px;
-    width: 80%;
-    max-width: 400px;
-    border-radius: 10px;
-}
-/* Thêm vào cuối file style.css */
-.product-grid {
-    display: flex;
-    overflow-x: auto; /* Cho phép cuộn ngang */
-    scroll-behavior: smooth; /* Cuộn mượt */
-    cursor: grab; /* Hiện hình bàn tay khi đưa chuột vào */
-    user-select: none; /* Ngăn bôi đen văn bản khi đang kéo */
-    -webkit-overflow-scrolling: touch; /* Giúp cuộn mượt trên iPhone */
-}
-
-.product-grid:active {
-    cursor: grabbing; /* Hiện hình bàn tay nắm lại khi đang kéo */
-}
-
-/* Ẩn thanh cuộn để nhìn giống ứng dụng di động */
-.product-grid::-webkit-scrollbar {
-    display: none;
-}
 .btn-cancel {
-    background-color: #ff4747; /* Màu đỏ nổi bật */
+    background-color: #ff4747;
     color: white;
     border: none;
     padding: 5px 10px;
@@ -272,7 +238,30 @@ body {
     font-weight: bold;
     transition: 0.3s;
 }
+
 .btn-cancel:hover {
     background-color: #cc0000;
-    transform: scale(1.1); /* Phóng to nhẹ khi di chuột */
+    transform: scale(1.1);
+}
+
+/* 6. Modal */
+.modal {
+    display: none; 
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+    background-color: white;
+    margin: 15% auto;
+    padding: 20px;
+    width: 90%;
+    max-width: 400px;
+    border-radius: 10px;
+    text-align: center;
 }
