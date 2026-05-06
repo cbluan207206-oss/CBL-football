@@ -147,26 +147,39 @@ body {
     align-items: center;
     justify-content: center;
 }
-
+/* Giữ nguyên các phần khác, chỉ sửa/thêm đoạn này */
 .modal-content {
     background-color: white;
+    margin: 5vh auto; /* Cách đỉnh màn hình 5% */
+    padding: 20px;
     width: 90%;
     max-width: 450px;
-    max-height: 85vh; /* Không tràn quá màn hình */
-    border-radius: 20px;
-    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
     position: relative;
-    overflow: hidden;
+    max-height: 90vh; /* Không cho bảng vượt quá màn hình */
     display: flex;
-    flex-direction: column;
+    flex-direction: column; /* Sắp xếp nội dung theo chiều dọc */
 }
 
 #detail-content {
-    overflow-y: auto; /* Cho phép kéo lên xuống để xem mô tả dài */
-    padding-right: 5px;
+    overflow-y: auto; /* QUAN TRỌNG: Tạo thanh cuộn dọc */
+    flex-grow: 1;    /* Để phần này chiếm không gian còn lại */
     text-align: left;
-    white-space: pre-line;
-    line-height: 1.5;
+    padding: 10px;
+    margin-top: 10px;
+    white-space: pre-line; /* Giữ các dấu xuống dòng */
+    line-height: 1.6;
+    border-top: 1px solid #eee;
+}
+
+/* Làm cho thanh cuộn dễ nhìn hơn trên điện thoại */
+#detail-content::-webkit-scrollbar {
+    width: 5px;
+}
+#detail-content::-webkit-scrollbar-thumb {
+    background: #ff4757;
+    border-radius: 10px;
 }
 
 /* Tùy chỉnh thanh cuộn nhỏ cho đẹp */
