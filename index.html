@@ -126,14 +126,14 @@
 
     <!-- Lưu ý quan trọng: Tên file script phải khớp với file .js của bạn -->
     <script src="script.js?v=1.3"></script>
-    
-    <div id="product-detail-modal" class="modal" style="display:none; position:fixed; z-index:10000; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.8);">
-        <div style="background:white; margin:10% auto; padding:20px; width:90%; max-width:500px; border-radius:15px; position:relative; text-align:center;">
-            <span onclick="closeProductDetail()" style="position:absolute; right:15px; top:10px; cursor:pointer; font-size:30px;">&times;</span>
-            <div id="detail-content"></div>
+    <div id="product-detail-modal" class="modal">
+    <div class="modal-content">
+        <span onclick="closeProductDetail()" style="position:absolute; right:15px; top:10px; cursor:pointer; font-size:30px; z-index:1;">&times;</span>
+        <div id="detail-content">
+            <!-- JavaScript sẽ đổ nội dung vào đây và nội dung này sẽ cuộn được -->
         </div>
     </div>
-
+</div> 
     <div id="checkout-modal" class="modal" style="display:none; position:fixed; z-index:11000; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.8);">
         <div style="background:white; margin:10% auto; padding:25px; width:90%; max-width:400px; border-radius:15px; position:relative;">
             <span onclick="closeCheckout()" style="position:absolute; right:15px; top:10px; cursor:pointer; font-size:25px;">&times;</span>
