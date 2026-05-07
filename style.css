@@ -6,12 +6,11 @@
 }
 
 body {
-    /* Bỏ overflow: hidden để trên điện thoại có thể cuộn trang tự nhiên nếu cần */
     overflow-x: hidden; 
     background: #f0f2f5;
 }
 
-/* 1. Navbar - Tối ưu cho di động */
+/* 1. Navbar */
 .navbar {
     position: fixed;
     top: 0;
@@ -64,7 +63,7 @@ body {
     visibility: hidden;
     transform: rotateY(-90deg);
     overflow-y: auto; 
-    padding-top: 70px; /* Tránh bị che bởi Navbar */
+    padding-top: 70px;
 }
 
 .page.active {
@@ -73,7 +72,7 @@ body {
     transform: rotateY(0deg);
 }
 
-/* 3. Trang chủ (Hero) - Tự điều chỉnh cỡ chữ theo màn hình */
+/* 3. Hero */
 .hero {
     width: 100%;
     height: 100%;
@@ -89,7 +88,7 @@ body {
 }
 
 .hero h1 { 
-    font-size: clamp(2rem, 8vw, 4rem); /* Tự co giãn chữ */
+    font-size: clamp(2rem, 8vw, 4rem);
     margin-bottom: 20px; 
     text-shadow: 2px 2px 15px rgba(0,0,0,0.7);
 }
@@ -99,7 +98,7 @@ body {
     margin-bottom: 30px;
 }
 
-/* 4. Lưới sản phẩm - Vuốt ngang cực mượt trên điện thoại */
+/* 4. Lưới sản phẩm */
 .product-grid {
     display: flex;
     gap: 20px;
@@ -113,7 +112,7 @@ body {
 .product-grid::-webkit-scrollbar { display: none; }
 
 .product-card {
-    flex: 0 0 280px; /* Độ rộng thẻ sản phẩm phù hợp mọi màn hình */
+    flex: 0 0 280px;
     scroll-snap-align: center;
     background: white;
     padding: 15px;
@@ -133,113 +132,83 @@ body {
     cursor: pointer;
 }
 
-/* 5. Giỏ hàng & Modal – Tối ưu kéo cuộn */
+/* 5. Modal & Bảng căn chỉnh - ĐÃ CẬP NHẬT ĐỂ CÂN ĐỐI */
 .modal {
-    display: none; /* Giữ nguyên để ẩn lúc mới vào */
+    display: none;
     position: fixed;
     z-index: 9999;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,0.85);
-    /* Dùng flex để căn giữa bảng thông tin */
+    background-color: rgba(0,0,0,0.8);
+    display: none; /* JS sẽ đổi thành flex */
     align-items: center;
     justify-content: center;
 }
 
 .modal-content {
     background-color: white;
-    margin: auto; /* Căn giữa tự động */
-    padding: 20px;
+    padding: 25px;
     width: 90%;
-    max-width: 450px;
+    max-width: 420px;
     border-radius: 15px;
-    text-align: center;
     position: relative;
-    max-height: 85vh; /* Ép khung trắng không quá 85% màn hình */
+    max-height: 90vh;
     display: flex;
     flex-direction: column;
+    box-sizing: border-box;
+}
+
+.close-x {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    cursor: pointer;
+    font-size: 28px;
+    color: #333;
+    z-index: 10;
+}
+
+/* Căn chỉnh các ô nhập trong Checkout */
+#checkout-modal input, 
+#checkout-modal select, 
+#checkout-modal textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    box-sizing: border-box;
 }
 
 #detail-content {
-    overflow-y: auto; /* QUAN TRỌNG: Kích hoạt vuốt lên xuống */
+    overflow-y: auto;
     flex-grow: 1;
     text-align: left;
-    padding: 10px;
-    margin-top: 10px;
-    white-space: pre-line; /* Giữ các dòng mô tả bạn đã viết */
+    padding: 10px 0;
+    white-space: pre-line;
     line-height: 1.6;
-    -webkit-overflow-scrolling: touch; /* Giúp vuốt cực mượt trên iPhone */
+    -webkit-overflow-scrolling: touch;
 }
 
-/* Giữ nguyên các phần khác, chỉ sửa/thêm đoạn này */
-.modal-content {
-    background-color: white;
-    margin: 5vh auto; /* Cách đỉnh màn hình 5% */
-    padding: 20px;
-    width: 90%;
-    max-width: 450px;
-    border-radius: 15px;
-    text-align: center;
-    position: relative;
-    max-height: 90vh; /* Không cho bảng vượt quá màn hình */
-    display: flex;
-    flex-direction: column; /* Sắp xếp nội dung theo chiều dọc */
+/* Style cho Bill */
+.bill-style {
+    max-width: 320px !important;
+    border: 2px dashed #333;
+    font-family: monospace !important;
 }
 
-#detail-content {
-    overflow-y: auto; /* QUAN TRỌNG: Tạo thanh cuộn dọc */
-    flex-grow: 1;    /* Để phần này chiếm không gian còn lại */
-    text-align: left;
-    padding: 10px;
-    margin-top: 10px;
-    white-space: pre-line; /* Giữ các dấu xuống dòng */
-    line-height: 1.6;
-    border-top: 1px solid #eee;
-}
+/* Thanh cuộn */
+#detail-content::-webkit-scrollbar, 
+#cart-items-list::-webkit-scrollbar { width: 4px; }
+#detail-content::-webkit-scrollbar-thumb, 
+#cart-items-list::-webkit-scrollbar-thumb { background: #ff4757; border-radius: 10px; }
 
-/* Làm cho thanh cuộn dễ nhìn hơn trên điện thoại */
-#detail-content::-webkit-scrollbar {
-    width: 5px;
-}
-#detail-content::-webkit-scrollbar-thumb {
-    background: #ff4757;
-    border-radius: 10px;
-}
-
-/* Tùy chỉnh thanh cuộn nhỏ cho đẹp */
-#detail-content::-webkit-scrollbar { width: 4px; }
-#detail-content::-webkit-scrollbar-thumb { background: #ff4757; border-radius: 10px; }
-
-/* 6. RESPONSIVE - PHẦN QUAN TRỌNG NHẤT CHO TẤT CẢ THIẾT BỊ */
-
-/* Dành cho máy tính bảng (iPad) và điện thoại nằm ngang */
-@media (max-width: 1024px) {
+/* 6. RESPONSIVE */
+@media (max-width: 768px) {
     .navbar { padding: 0 20px; }
     .product-grid { padding: 20px; }
-}
-
-/* Dành cho điện thoại di động (iPhone/Samsung/...) */
-@media (max-width: 768px) {
-    .menu-links { gap: 15px; }
-    .menu-links li { font-size: 12px; }
-    
-    .product-card {
-        flex: 0 0 85%; /* Hiện 1 card rưỡi để khách biết là phải vuốt ngang */
-    }
-    
-    .modal-content {
-        width: 95%;
-        margin: 0;
-    }
-    
-    .hero h1 { line-height: 1.2; }
-}
-
-/* Dành cho điện thoại siêu nhỏ */
-@media (max-width: 380px) {
-    .menu-links { display: none; } /* Ẩn menu chữ nếu màn hình quá chật */
-    .navbar { justify-content: center; }
-    .cart-icon { position: absolute; right: 20px; }
+    .product-card { flex: 0 0 85%; }
 }
