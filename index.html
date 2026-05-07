@@ -119,10 +119,64 @@
         </section>
     </main>
 
-    <div id="product-detail-modal" class="modal">
-        <div class="modal-content">
-            <span onclick="closeProductDetail()" class="close-x">&times;</span>
-            <div id="detail-content"></div>
+    <div id="product-detail-modal" class="modal" style="display:none; position:fixed; z-index:10000; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.8); align-items: center; justify-content: center;">
+        <div style="background:white; margin:auto; padding:20px; width:90%; max-width:500px; border-radius:15px; position:relative; max-height: 85vh; display: flex; flex-direction: column;">
+            <span onclick="closeProductDetail()" class="close-x" style="position:absolute; right:15px; top:10px; cursor:pointer; font-size:30px; z-index: 10;">&times;</span>
+            <div id="detail-content" style="overflow-y: auto; flex-grow: 1; padding: 10px; text-align: left;"></div>
+        </div>
+    </div>
+
+    <div id="cart-modal" class="modal" style="display:none; position:fixed; z-index:11000; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.5); align-items: center; justify-content: center;">
+        <div style="background:white; padding:20px; width:90%; max-width:450px; border-radius:15px; position:relative;">
+            <span onclick="toggleCart()" style="position:absolute; right:15px; top:10px; cursor:pointer; font-size:25px;">&times;</span>
+            <h2 style="margin-bottom: 15px; text-align: center;">Giỏ hàng của bạn</h2>
+            <div id="cart-items-list" style="max-height: 45vh; overflow-y: auto; margin-bottom: 15px;">
+                <p style="text-align: center; color: #888; padding: 20px;">Giỏ hàng đang trống...</p>
+            </div>
+            <hr style="margin: 10px 0;">
+            <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 1.1rem;">
+                <span>Tổng cộng:</span>
+                <span id="total-price" style="color: #ff4757;">0đ</span>
+            </div>
+            <button onclick="checkout()" style="width:100%; padding:15px; background:#27ae60; color:white; border:none; border-radius:10px; font-weight:bold; margin-top: 15px; cursor:pointer;">
+                ĐẶT HÀNG NGAY
+            </button>
+        </div>
+    </div>
+
+    <div id="checkout-modal" class="modal" style="display:none; position:fixed; z-index:12000; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.8); align-items: center; justify-content: center;">
+        <div style="background:white; padding:25px; width:90%; max-width:400px; border-radius:15px; position:relative;">
+            <span onclick="closeCheckout()" style="position:absolute; right:15px; top:10px; cursor:pointer; font-size:25px;">&times;</span>
+            <h2 style="text-align:center; margin-bottom:20px;">Thông Tin Nhận Hàng</h2>
+            
+            <label style="font-weight: bold; margin-bottom: 5px; display: block;">Chọn Size Giày:</label>
+            <select id="cus-size" style="width:100%; padding:12px; margin-bottom:15px; border:1px solid #ddd; border-radius:8px; font-size: 16px; background: #fff;">
+                <option value="">-- Nhấn để chọn Size --</option>
+                <option value="39">Size 39</option>
+                <option value="40">Size 40</option>
+                <option value="41">Size 41</option>
+                <option value="42">Size 42</option>
+                <option value="43">Size 43</option>
+                <option value="44">Size 44</option>
+                <option value="45">Size 45</option>
+            </select>
+
+            <input type="text" id="cus-name" placeholder="Họ và tên người nhận" style="width:100%; padding:12px; margin-bottom:10px; border:1px solid #ddd; border-radius:8px; box-sizing: border-box;">
+            <input type="tel" id="cus-phone" placeholder="Số điện thoại" style="width:100%; padding:12px; margin-bottom:10px; border:1px solid #ddd; border-radius:8px; box-sizing: border-box;">
+            <input type="text" id="cus-address" placeholder="Địa chỉ nhận hàng đầy đủ" style="width:100%; padding:12px; margin-bottom:10px; border:1px solid #ddd; border-radius:8px; box-sizing: border-box;">
+            <textarea id="cus-note" placeholder="Ghi chú thêm (ví dụ: giao giờ hành chính...)" style="width:100%; padding:12px; margin-bottom:15px; border:1px solid #ddd; border-radius:8px; height:70px; box-sizing: border-box;"></textarea>
+            
+            <button onclick="confirmOrder()" style="width:100%; padding:15px; background:#e67e22; color:white; border:none; border-radius:10px; font-weight:bold; cursor:pointer;">
+                XÁC NHẬN ĐẶT HÀNG
+            </button>
+        </div>
+    </div>
+
+    <div id="bill-modal" class="modal" style="display:none; position:fixed; z-index:13000; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.9); align-items: center; justify-content: center;">
+        <div style="background:white; padding:20px; width:85%; max-width:320px; border-radius:10px; border: 2px dashed #333; font-family: monospace;">
+            <h2 style="text-align:center; border-bottom: 1px solid #ddd; padding-bottom:10px;">CBL SOCCER</h2>
+            <div id="bill-detail" style="margin: 15px 0; font-size: 13px;"></div>
+            <p style="text-align:center; font-weight:bold;">Cảm ơn quý khách!</p>
         </div>
     </div>
 
