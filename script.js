@@ -7,8 +7,7 @@ function showSection(index) {
     pages[index].classList.add('active');
     
     // Đóng giỏ hàng luôn nếu đang mở khi chuyển trang
-    const cartModal = document.getElementById('cart-modal');
-    if (cartModal) cartModal.style.display = 'none';
+    document.getElementById('cart-modal').style.display = 'none';
 }
 
 // 2. Hàm Thêm sản phẩm vào mảng giỏ hàng
@@ -20,8 +19,7 @@ function addToCart(name, price) {
 
 // 3. Cập nhật số hiển thị trên icon giỏ hàng
 function updateCartUI() {
-    const countEl = document.getElementById('cart-count');
-    if (countEl) countEl.innerText = cart.length;
+    document.getElementById('cart-count').innerText = cart.length;
 }
 
 // 4. Hàm ẩn/hiện bảng chi tiết giỏ hàng
@@ -48,62 +46,65 @@ function renderCartItems() {
 
     let html = '';
     let total = 0;
-    cart.forEach((item, index) => {
-        html += `
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; border-bottom:1px solid #eee; padding-bottom:5px;">
-                <div>
-                    <span style="display:block; font-weight:bold;">${item.name}</span>
-                    <span style="color:#ff4757;">${item.price}đ</span>
-                </div>
-                <button onclick="removeFromCart(${index})" 
-                        style="background:#ff4757; color:white; border:none; padding:5px 10px; border-radius:5px; cursor:pointer; font-size:12px; transition: 0.3s;">
-                    Hủy
-                </button>
+cart.forEach((item, index) => { // Thêm index vào đây
+    html += `
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; border-bottom:1px solid #eee; padding-bottom:5px;">
+            <div>
+                <span style="display:block; font-weight:bold;">${item.name}</span>
+                <span style="color:#ff4757;">${item.price}đ</span>
             </div>
-        `;
-        // Chuyển giá từ chuỗi "500.000" thành số 500000 để tính toán
-        total += parseInt(item.price.toString().replace(/\./g, ''));
-    });
+            <button onclick="removeFromCart(${index})" 
+                    style="background:#ff4757; color:white; border:none; padding:5px 10px; border-radius:5px; cursor:pointer; font-size:12px; transition: 0.3s;">
+                Hủy
+            </button>
+        </div>
+    `;
+    total += parseInt(item.price.replace(/\./g, ''));
+});
 
     list.innerHTML = html;
     totalEl.innerText = total.toLocaleString('vi-VN') + "đ";
 }
 
 // 6. Hàm Đặt hàng
+// Thay thế từ dòng 64
 function checkout() {
     if (cart.length === 0) {
         alert("Giỏ hàng đang trống!");
         return;
     }
+    // Đóng giỏ hàng và mở bảng điền thông tin
     document.getElementById('cart-modal').style.display = 'none';
     document.getElementById('checkout-modal').style.display = 'block';
 }
-
 function closeCheckout() {
     document.getElementById('checkout-modal').style.display = 'none';
 }
-
 function confirmOrder() {
+    // 1. Lấy dữ liệu TRƯỚC khi reset
     const name = document.getElementById('cus-name').value;
     const phone = document.getElementById('cus-phone').value;
     const address = document.getElementById('cus-address').value;
     const note = document.getElementById('cus-note').value;
     const size = document.getElementById('cus-size').value;
 
+    // 2. Kiểm tra điền đủ thông tin
     if (!size || !name || !phone || !address) {
         alert("Vui lòng chọn Size và điền đủ thông tin nhận hàng!");
         return;
     }
 
+    // 3. Lấy thông tin giỏ hàng để đưa vào Bill
+    // Lưu ý: ID 'total-price' phải khớp với dòng 155 trong index.html của bạn
     let productNames = cart.map(item => item.name).join(", ");
     let totalPrice = document.getElementById('total-price').innerText;
-
+    // --- ĐOẠN MỚI: Gửi thông báo về Telegram ---
     const messageContent = `
 👟 ĐƠN HÀNG MỚI - CBL SOCCER 👟
 ----------------------------
 📦 Sản phẩm: ${productNames}
 📏 Size: ${size}
-💰 Tổng cộng: ${totalPrice}
+💰 Tổng cộng: ${totalPrice}đ
 👤 Khách: ${name}
 📞 SĐT: ${phone}
 📍 Địa chỉ: ${address}
@@ -112,13 +113,15 @@ function confirmOrder() {
 🚀 Check đơn ngay chủ shop ơi!
     `;
     sendTelegramMessage(messageContent);
+    // ------------------------------------------
 
+    // 4. Chèn nội dung vào khu vực bill-detail
     const billDetail = document.getElementById('bill-detail');
     if (billDetail) {
         billDetail.innerHTML = `
             <p><b>Sản phẩm:</b> ${productNames}</p>
             <p><b>Size:</b> <span style="color:blue; font-weight:bold;">${size}</span></p>
-            <p><b>Tổng tiền:</b> <span style="color:red; font-weight:bold;">${totalPrice}</span></p>
+            <p><b>Tổng tiền:</b> <span style="color:red; font-weight:bold;">${totalPrice}đ</span></p>
             <hr style="border: 0.5px dashed #ddd;">
             <p><b>Người nhận:</b> ${name}</p>
             <p><b>SĐT:</b> ${phone}</p>
@@ -127,15 +130,23 @@ function confirmOrder() {
         `;
     }
 
+    // 5. Hiện Bill và đóng bảng thông tin khách
     document.getElementById('checkout-modal').style.display = 'none';
     const billModal = document.getElementById('bill-modal');
-    if (billModal) billModal.style.display = 'block';
+    if (billModal) {
+        billModal.style.display = 'block';
+    }
 
+    // 6. Xóa giỏ hàng để bắt đầu đơn mới
     cart = [];
     updateCartUI();
 
+    // 7. Đợi 5 giây rồi mới tự đóng Bill và xóa trắng ô nhập
     setTimeout(() => {
-        if (billModal) billModal.style.display = 'none';
+        if (billModal) {
+            billModal.style.display = 'none';
+        }
+        // Xóa trắng dữ liệu ô nhập sau khi bill ẩn
         document.getElementById('cus-name').value = "";
         document.getElementById('cus-phone').value = "";
         document.getElementById('cus-address').value = "";
@@ -144,75 +155,98 @@ function confirmOrder() {
     }, 5000);
 }
 
-// 7. Hàm gửi Telegram
-function sendTelegramMessage(message) {
-    const token = "8711185097:AAGNpNiha-FaDf-mZB9HtiBON1rW0iSz_K0"; 
-    const chatId = "7901882812"; 
-    const url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`;
-
-    fetch(url).catch(err => console.error("Lỗi gửi Telegram:", err));
-}
-
-// 8. Hàm hiện thông tin chi tiết (Chỉ giữ lại 1 bản duy nhất)
-function showProductDetail(name, price, size, description, image) {
+window.onload = () => {
+    showSection(0);
+};
+// Hàm hiện thông tin chi tiết
+function showProductDetail(name, price, size, desc, img) {
     const modal = document.getElementById('product-detail-modal');
     const content = document.getElementById('detail-content');
     
-    // Đưa nội dung vào, chú ý phần mô tả phải nằm trong vùng cuộn
     content.innerHTML = `
-        <img src="${image}" style="width:100%; border-radius:10px; margin-bottom:15px;">
-        <h2 style="margin-bottom:10px;">${name}</h2>
-        <p style="color:#ff4757; font-weight:bold; font-size:1.2rem; margin-bottom:5px;">${price}đ</p>
-        <p style="margin-bottom:15px;"><strong>Size:</strong> ${size}</p>
-        <div style="background:#f9f9f9; padding:10px; border-radius:8px;">
-            <p>${description}</p>
-        </div>
-        <button onclick="addToCart('${name}', '${price}'); closeProductDetail();" 
-                style="width:100%; padding:15px; background:#27ae60; color:white; border:none; border-radius:10px; font-weight:bold; margin-top:20px; cursor:pointer;">
+        <img src="${img}" style="width:100%; border-radius:10px; margin-bottom:15px;">
+        <h2 style="color:#333;">${name}</h2>
+        <p style="color:#ff4757; font-size:20px; font-weight:bold;">Giá: ${price}đ</p>
+        <p><b>Size:</b> ${size}</p>
+        <p style="color:#666; line-height:1.6; margin:15px 0;">${desc}</p>
+        <button onclick="addToCart('${name}', '${price}'); closeProductDetail()" 
+                style="width:100%; padding:12px; background:#ff4757; color:white; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">
             THÊM VÀO GIỎ NGAY
         </button>
     `;
-    
     modal.style.display = 'block';
-    // Reset thanh cuộn lên đầu mỗi khi mở sản phẩm mới
-    content.scrollTop = 0;
 }
 
-
+// Hàm đóng bảng chi tiết
 function closeProductDetail() {
     document.getElementById('product-detail-modal').style.display = 'none';
 }
-
-// 9. Xóa sản phẩm khỏi giỏ hàng
-function removeFromCart(index) {
-    cart.splice(index, 1);
-    updateCartUI(); 
-    renderCartItems(); 
+function showProductDetail(name, price, size, desc, img) {
+    const modal = document.getElementById('product-detail-modal');
+    const content = document.getElementById('detail-content');
+    content.innerHTML = `
+        <img src="${img}" style="width:100%; border-radius:10px; margin-bottom:15px;">
+        <h2>${name}</h2>
+        <p style="color:#ff4757; font-weight:bold; font-size:20px;">${price}đ</p>
+        <p><b>Size:</b> ${size}</p>
+        <p style="color:#666; margin:15px 0;">${desc}</p>
+        <button onclick="addToCart('${name}', '${price}'); closeProductDetail()" style="width:100%; padding:12px; background:#27ae60; color:white; border:none; border-radius:8px; cursor:pointer; font-weight:bold;">THÊM VÀO GIỎ NGAY</button>
+    `;
+    modal.style.display = 'block';
 }
+function sendTelegramMessage(message) {
+    const token = "8711185097:AAGNpNiha-FaDf-mZB9HtiBON1rW0iSz_K0"; // Token mới của BÁ-Luận bot
+    const chatId = "7901882812"; // ID của bạn
+    const url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`;
 
-// 10. Kéo chuột để lướt sản phẩm (Đã sửa Class cho khớp với CSS)
-const slider = document.querySelector('.product-grid'); 
+    fetch(url).then(response => {
+        if (!response.ok) {
+            console.log("Lỗi gửi thông báo! Kiểm tra lại Token hoặc đã nhấn Start bot chưa.");
+        }
+    });
+}
+// Đoạn code giúp kéo chuột để xem sản phẩm trên máy tính
+const slider = document.querySelector('.product-container'); // Hoặc tên class chứa các sản phẩm của bạn
 let isDown = false;
-let startX;
+let startDate;
 let scrollLeft;
 
 if (slider) {
     slider.addEventListener('mousedown', (e) => {
         isDown = true;
-        startX = e.pageX - slider.offsetLeft;
+        slider.classList.add('active');
+        startDate = e.pageX - slider.offsetLeft;
         scrollLeft = slider.scrollLeft;
     });
-    slider.addEventListener('mouseleave', () => isDown = false);
-    slider.addEventListener('mouseup', () => isDown = false);
+
+    slider.addEventListener('mouseleave', () => {
+        isDown = false;
+        slider.classList.remove('active');
+    });
+
+    slider.addEventListener('mouseup', () => {
+        isDown = false;
+        slider.classList.remove('active');
+    });
+
     slider.addEventListener('mousemove', (e) => {
         if (!isDown) return;
         e.preventDefault();
         const x = e.pageX - slider.offsetLeft;
-        const walk = (x - startX) * 2; 
+        const walk = (x - startDate) * 2; // Nhân 2 để tốc độ lướt nhanh hơn
         slider.scrollLeft = scrollLeft - walk;
     });
 }
-
-window.onload = () => {
-    showSection(0);
-};
+function removeFromCart(index) {
+    // 1. Xóa sản phẩm khỏi mảng
+    cart.splice(index, 1);
+    
+    // 2. Cập nhật lại số lượng hiển thị trên icon giỏ hàng
+    updateCartUI(); 
+    
+    // 3. Vẽ lại bảng danh sách sản phẩm trong giỏ hàng
+    renderCartItems(); 
+    
+    // 4. Lưu vào máy khách (nếu cần)
+    localStorage.setItem('cart', JSON.stringify(cart));
+}
