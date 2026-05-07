@@ -125,6 +125,43 @@
             <div id="detail-content"></div>
         </div>
     </div>
+<div id="cart-modal" class="modal">
+    <div class="modal-content">
+        <span onclick="toggleCart()" class="close-x">&times;</span>
+        <h2 style="margin-bottom: 15px;">Giỏ hàng của bạn</h2>
+        
+        <div id="cart-items-list" style="max-height: 50vh; overflow-y: auto;"></div>
+        
+        <div style="margin-top: 20px; border-top: 2px solid #eee; padding-top: 15px;">
+            <h3 style="display: flex; justify-content: space-between;">
+                Tổng cộng: <span id="total-price" style="color: #ff4757;">0đ</span>
+            </h3>
+            <button onclick="checkout()" 
+                    style="width: 100%; padding: 15px; background: #27ae60; color: white; border: none; border-radius: 10px; font-weight: bold; margin-top: 15px; cursor: pointer;">
+                ĐẶT HÀNG NGAY
+            </button>
+        </div>
+    </div>
+</div>
+
+<div id="checkout-modal" class="modal">
+    <div class="modal-content">
+        <span onclick="closeCheckout()" class="close-x">&times;</span>
+        <h2>Thông tin nhận hàng</h2>
+        <div style="text-align: left; margin-top: 15px;">
+            <label>Chọn Size giày:</label>
+            <input type="text" id="cus-size" placeholder="Ví dụ: 40, 41..." style="width:100%; padding:10px; margin-bottom:10px; border-radius:5px; border:1px solid #ccc;">
+            
+            <input type="text" id="cus-name" placeholder="Họ tên của bạn" style="width:100%; padding:10px; margin-bottom:10px; border-radius:5px; border:1px solid #ccc;">
+            <input type="tel" id="cus-phone" placeholder="Số điện thoại" style="width:100%; padding:10px; margin-bottom:10px; border-radius:5px; border:1px solid #ccc;">
+            <input type="text" id="cus-address" placeholder="Địa chỉ giao hàng" style="width:100%; padding:10px; margin-bottom:10px; border-radius:5px; border:1px solid #ccc;">
+            <textarea id="cus-note" placeholder="Ghi chú thêm (ví dụ: giao giờ hành chính)" style="width:100%; padding:10px; height:60px; border-radius:5px; border:1px solid #ccc;"></textarea>
+        </div>
+        <button onclick="confirmOrder()" style="width: 100%; padding: 15px; background: #e67e22; color: white; border: none; border-radius: 10px; font-weight: bold; margin-top: 15px;">
+            XÁC NHẬN ĐƠN HÀNG
+        </button>
+    </div>
+</div>
 
     <script src="script.js?v=1.3"></script>
 </body>
