@@ -9,7 +9,6 @@ function showSection(index) {
 
 function addToCart(name, price) {
     cart.push({ name: name, price: price });
-    seveCart(); // lưu vào localstorage
     updateCartUI();
     alert("Đã thêm " + name + " vào giỏ!");
 }
@@ -102,15 +101,6 @@ function confirmOrder() {
 🚀 Check đơn ngay chủ shop ơi!
     `;
     sendTelegramMessage(messageContent);
-// Tìm đoạn cuối của hàm confirmOrder và thêm dòng này vào:
-function confirmOrder() {
-    // ... code cũ của bạn ...
-    
-    cart = [];
-    saveCart(); // Thêm dòng này để xóa dữ liệu đã lưu sau khi đặt hàng
-    updateCartUI();
-
-    // ... code cũ của bạn ...
 }
 
     const billDetail = document.getElementById('bill-detail');
@@ -192,6 +182,6 @@ function loadCart() {
 }
 
 window.onload = () => {
-    loadCart(); // thêm 
+    loadCart(); // thêm
     showSection(0);
 };
