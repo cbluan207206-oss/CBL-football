@@ -9,6 +9,7 @@ function showSection(index) {
 
 function addToCart(name, price) {
     cart.push({ name: name, price: price });
+    saveCart(); // Lưu giỏ hàng
     updateCartUI();
     alert("Đã thêm " + name + " vào giỏ!");
 }
@@ -47,7 +48,7 @@ function renderCartItems() {
                     <span style="color:#ff4757;">${item.price}đ</span>
                 </div>
                 <button onclick="removeFromCart(${index})" 
-                style="background:#ff4757; color:white; border:none; padding:5px 10px; border-radius:5px; cursor:pointer; font-size:12px;">
+                        style="background:#ff4757; color:white; border:none; padding:5px 10px; border-radius:5px; cursor:pointer; font-size:12px;">
                     Hủy
                 </button>
             </div>
@@ -101,7 +102,6 @@ function confirmOrder() {
 🚀 Check đơn ngay chủ shop ơi!
     `;
     sendTelegramMessage(messageContent);
-}
 
     const billDetail = document.getElementById('bill-detail');
     if (billDetail) {
@@ -123,7 +123,9 @@ function confirmOrder() {
         billModal.style.display = 'flex';
     }
 
+    // Sau khi đặt hàng, xóa sạch giỏ hàng
     cart = [];
+    saveCart(); 
     updateCartUI();
 
     setTimeout(() => {
@@ -163,12 +165,26 @@ function sendTelegramMessage(message) {
 
 function removeFromCart(index) {
     cart.splice(index, 1);
-    seveCart(); lưu vào loalStorage
+    saveCart(); // Lưu giỏ hàng sau khi xóa
     updateCartUI(); 
     renderCartItems(); 
 }
+
+// Hàm lưu giỏ hàng
+function saveCart() {
+    localStorage.setItem('cbl_soccer_cart', JSON.stringify(cart));
+}
+
+// Hàm tải giỏ hàng
+function loadCart() {
+    const savedCart = localStorage.getItem('cbl_soccer_cart');
+    if (savedCart) {
+        cart = JSON.parse(savedCart);
+        updateCartUI();
+    }
 }
 
 window.onload = () => {
+    loadCart(); // Tải lại giỏ hàng cũ khi vừa vào trang
     showSection(0);
 };
