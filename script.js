@@ -120,6 +120,38 @@ function confirmOrder() {
 ----------------------------
 🚀 Check đơn ngay chủ shop ơi!
     `;
+    // --- ĐOẠN CODE TÌM KIẾM MỚI ---
+function searchProduct() {
+    // Lấy từ khóa người dùng nhập và chuyển về chữ thường
+    let input = document.getElementById('product-search').value.toLowerCase();
+    
+    // Lấy tất cả các thẻ sản phẩm trong grid
+    let cards = document.querySelectorAll('.product-card');
+
+    cards.forEach(card => {
+        // Lấy tên sản phẩm bên trong thẻ h3 của từng card
+        let productName = card.querySelector('h3').innerText.toLowerCase();
+        
+        // So khớp: Nếu tên sản phẩm chứa từ khóa thì hiện, không thì ẩn
+        if (productName.includes(input)) {
+            card.style.display = "flex"; 
+        } else {
+            card.style.display = "none"; 
+        }
+    });
+
+    // Nếu người dùng đang gõ, tự động chuyển sang trang Sản Phẩm (Section 1) để xem kết quả
+    if (input.length > 0) {
+        showSection(1);
+    }
+}
+// ------------------------------
+
+// Hàm Telegram của bạn vẫn giữ nguyên ở dưới này...
+function sendTelegramMessage(message) {
+    // ... code cũ của bạn
+}
+
     sendTelegramMessage(messageContent);
 
     const billDetail = document.getElementById('bill-detail');
