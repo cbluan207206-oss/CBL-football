@@ -176,10 +176,11 @@ body {
     align-items: center;
     background: #f1f1f1;
     border-radius: 20px;
-    padding: 5px 15px;
+    padding: 5px 12px;
     margin: 0 10px;
-    flex: 1;
-    max-width: 300px;
+    flex: 1; /* Giúp thanh tìm kiếm giãn ra */
+    min-width: 120px; /* Độ rộng tối thiểu để hiện chữ */
+    border: 1px solid #ddd;
 }
 
 .search-container input {
@@ -187,23 +188,21 @@ body {
     background: none;
     outline: none;
     width: 100%;
-    padding: 5px;
-    font-size: 14px;
+    padding: 8px 5px;
+    font-size: 16px; /* Để điện thoại không bị tự động zoom */
+    color: #333; /* Màu chữ hiển thị */
 }
 
-.search-container i {
-    color: #888;
-}
-
-/* Ẩn sản phẩm không khớp khi tìm kiếm */
-.product-card.hidden {
-    display: none;
-}
-
-@media (max-width: 600px) {
-    .search-container {
-        max-width: 150px;
-        margin: 0 5px;
+/* Fix lỗi trên mobile trong ảnh của bạn */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 0 10px;
+        gap: 5px;
     }
-    .menu-links { gap: 10px; }
+    .menu-links li {
+        font-size: 12px;
+    }
+    .search-container {
+        max-width: 130px;
+    }
 }
