@@ -167,21 +167,8 @@ function removeFromCart(index) {
     updateCartUI(); 
     renderCartItems(); 
 }
-// Hàm lưu giỏ hàng vào localStorage
-function saveCart() {
-    localStorage.setItem('cbl_soccer_cart', JSON.stringify(cart));
-}
-
-// Hàm tải giỏ hàng từ localStorage khi mở trang
-function loadCart() {
-    const savedCart = localStorage.getItem('cbl_soccer_cart');
-    if (savedCart) {
-        cart = JSON.parse(savedCart);
-        updateCartUI();
-    }
 }
 
 window.onload = () => {
-    loadCart(); // thêm
     showSection(0);
 };
