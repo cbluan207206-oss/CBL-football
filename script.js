@@ -1,20 +1,33 @@
-let cart = [];
+// Khởi tạo giỏ hàng từ LocalStorage nếu có
+let cart = JSON.parse(localStorage.getItem('cbl_cart')) || [];
 
 function showSection(index) {
     const pages = document.querySelectorAll('.page');
-    pages.forEach(page => page.classList.remove('active'));
-    pages[index].classList.add('active');
-    document.getElementById('cart-modal').style.display = 'none';
+    pages.forEach((page, i) => {
+        if(i === index) {
+            page.classList.add('active');
+        } else {
+            page.classList.remove('active');
+        }
+    });
+    // Đóng các modal nếu đang mở khi chuyển trang
+    document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
 }
 
 function addToCart(name, price) {
     cart.push({ name: name, price: price });
+    saveCart();
     updateCartUI();
     alert("Đã thêm " + name + " vào giỏ!");
 }
 
+function saveCart() {
+    localStorage.setItem('cbl_cart', JSON.stringify(cart));
+}
+
 function updateCartUI() {
-    document.getElementById('cart-count').innerText = cart.length;
+    const countEl = document.getElementById('cart-count');
+    if(countEl) countEl.innerText = cart.length;
 }
 
 function toggleCart() {
@@ -57,6 +70,13 @@ function renderCartItems() {
 
     list.innerHTML = html;
     totalEl.innerText = total.toLocaleString('vi-VN') + "đ";
+}
+
+function removeFromCart(index) {
+    cart.splice(index, 1);
+    saveCart();
+    updateCartUI(); 
+    renderCartItems(); 
 }
 
 function checkout() {
@@ -118,21 +138,21 @@ function confirmOrder() {
 
     document.getElementById('checkout-modal').style.display = 'none';
     const billModal = document.getElementById('bill-modal');
-    if (billModal) {
-        billModal.style.display = 'flex';
-    }
+    if (billModal) billModal.style.display = 'flex';
 
+    // Xóa giỏ hàng sau khi đặt thành công
     cart = [];
+    saveCart();
     updateCartUI();
 
     setTimeout(() => {
-        if (billModal) { billModal.style.display = 'none'; }
+        if (billModal) billModal.style.display = 'none';
         document.getElementById('cus-name').value = "";
         document.getElementById('cus-phone').value = "";
         document.getElementById('cus-address').value = "";
         document.getElementById('cus-note').value = "";
         document.getElementById('cus-size').value = "";
-    }, 5000);
+    }, 6000);
 }
 
 function showProductDetail(name, price, size, desc, img) {
@@ -160,12 +180,8 @@ function sendTelegramMessage(message) {
     fetch(url);
 }
 
-function removeFromCart(index) {
-    cart.splice(index, 1);
-    updateCartUI(); 
-    renderCartItems(); 
-}
-
+// Khi trang load xong
 window.onload = () => {
-    showSection(0);
+    updateCartUI();
+    showSection(0); // Luôn bắt đầu ở trang chủ
 };
