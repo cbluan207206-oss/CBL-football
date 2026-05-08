@@ -10,7 +10,6 @@ body {
     background: #f0f2f5;
 }
 
-/* 1. Navbar */
 .navbar {
     position: fixed;
     top: 0;
@@ -40,7 +39,6 @@ body {
     font-size: 14px;
 }
 
-/* 2. Container và Page */
 .container {
     height: 100vh;
     width: 100vw;
@@ -57,11 +55,11 @@ body {
     justify-content: center;
     align-items: center;
     background: #f4f4f4;
-    transition: all 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
-    transform-origin: left;
+    transition: all 0.6s cubic-bezier(0.645, 0.045, 0.355, 1);
+    transform-origin: center;
     opacity: 0;
     visibility: hidden;
-    transform: rotateY(-90deg);
+    transform: rotateY(90deg); /* Chỉnh lại góc quay để lật tự nhiên hơn */
     overflow-y: auto; 
     padding-top: 70px;
 }
@@ -70,9 +68,9 @@ body {
     opacity: 1;
     visibility: visible;
     transform: rotateY(0deg);
+    z-index: 5;
 }
 
-/* 3. Hero */
 .hero {
     width: 100%;
     height: 100%;
@@ -93,12 +91,6 @@ body {
     text-shadow: 2px 2px 15px rgba(0,0,0,0.7);
 }
 
-.hero p {
-    font-size: clamp(1rem, 4vw, 1.5rem);
-    margin-bottom: 30px;
-}
-
-/* 4. Lưới sản phẩm */
 .product-grid {
     display: flex;
     gap: 20px;
@@ -106,10 +98,7 @@ body {
     width: 100%;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
 }
-
-.product-grid::-webkit-scrollbar { display: none; }
 
 .product-card {
     flex: 0 0 280px;
@@ -129,35 +118,31 @@ body {
     width: 100%;
     height: 200px;
     object-fit: contain;
-    cursor: pointer;
 }
 
-/* 5. Modal & Bảng căn chỉnh - ĐÃ CẬP NHẬT ĐỂ CÂN ĐỐI */
+/* Modals */
 .modal {
-    display: none;
+    display: none; /* Mặc định ẩn */
     position: fixed;
-    z-index: 9999;
+    z-index: 10000;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,0.8);
-    display: none; /* JS sẽ đổi thành flex */
+    background: rgba(0,0,0,0.8);
     align-items: center;
     justify-content: center;
 }
 
 .modal-content {
-    background-color: white;
+    background: white;
     padding: 25px;
     width: 90%;
-    max-width: 420px;
+    max-width: 450px;
     border-radius: 15px;
     position: relative;
-    max-height: 90vh;
-    display: flex;
-    flex-direction: column;
-    box-sizing: border-box;
+    max-height: 85vh;
+    overflow-y: auto;
 }
 
 .close-x {
@@ -165,12 +150,9 @@ body {
     right: 15px;
     top: 10px;
     cursor: pointer;
-    font-size: 28px;
-    color: #333;
-    z-index: 10;
+    font-size: 30px;
 }
 
-/* Căn chỉnh các ô nhập trong Checkout */
 #checkout-modal input, 
 #checkout-modal select, 
 #checkout-modal textarea {
@@ -180,33 +162,8 @@ body {
     border: 1px solid #ddd;
     border-radius: 8px;
     font-size: 16px;
-    box-sizing: border-box;
 }
 
-#detail-content {
-    overflow-y: auto;
-    flex-grow: 1;
-    text-align: left;
-    padding: 10px 0;
-    white-space: pre-line;
-    line-height: 1.6;
-    -webkit-overflow-scrolling: touch;
-}
-
-/* Style cho Bill */
-.bill-style {
-    max-width: 320px !important;
-    border: 2px dashed #333;
-    font-family: monospace !important;
-}
-
-/* Thanh cuộn */
-#detail-content::-webkit-scrollbar, 
-#cart-items-list::-webkit-scrollbar { width: 4px; }
-#detail-content::-webkit-scrollbar-thumb, 
-#cart-items-list::-webkit-scrollbar-thumb { background: #ff4757; border-radius: 10px; }
-
-/* 6. RESPONSIVE */
 @media (max-width: 768px) {
     .navbar { padding: 0 20px; }
     .product-grid { padding: 20px; }
