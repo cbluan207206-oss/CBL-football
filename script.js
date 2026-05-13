@@ -214,3 +214,75 @@ window.onload = () => {
     updateCartUI();
     showSection(0); // Luôn bắt đầu ở trang chủ
 };
+const container = document.getElementById('auth-container');
+const registerBtn = document.getElementById('register');
+const loginBtn = document.getElementById('login');
+
+// Chuyển sang giao diện Đăng ký
+registerBtn.addEventListener('click', () => {
+    container.classList.add("active");
+});
+
+// Chuyển sang giao diện Đăng nhập
+loginBtn.addEventListener('click', () => {
+    container.classList.remove("active");
+});
+
+// Xử lý khi nhấn nút Đăng nhập
+document.getElementById('loginForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    // Tại đây bạn sẽ gọi API để kiểm tra tài khoản
+    alert("Đang xử lý đăng nhập...");
+});
+// Ví dụ logic Backend (Node.js + Express)
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+
+// Giả lập lưu trữ User vào Database
+app.post('/register', async (req, res) => {
+    const { email, password } = req.body;
+    
+    // 1. Kiểm tra email tồn tại
+    const userExists = await db.findUserByEmail(email);
+    if (userExists) {
+        return res.status(400).json({ message: "Email đã tồn tại trên hệ thống!" });
+    }
+
+    // 2. Bảo mật: Băm mật khẩu trước khi lưu
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    
+    // 3. Lưu vào DB
+    await db.saveUser({ email, password: hashedPassword });
+    res.status(201).json({ message: "Đăng ký thành công!" });
+});
+const loginForm = document.getElementById('loginForm');
+const loginError = document.getElementById('loginError');
+
+loginForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const email = document.getElementById('loginEmail').value;
+    const password = document.getElementById('loginPassword').value;
+
+    try {
+        const response = await fetch('/api/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            // Hiển thị lỗi phản hồi từ Server (Ví dụ: "Sai mật khẩu")
+            loginError.innerText = data.message;
+            loginError.style.display = 'block';
+        } else {
+            // Đăng nhập thành công
+            window.location.href = "/trang-chu";
+        }
+    } catch (err) {
+        loginError.innerText = "Lỗi kết nối máy chủ!";
+        loginError.style.display = 'block';
+    }
+});
