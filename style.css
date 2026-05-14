@@ -206,3 +206,47 @@ body {
         max-width: 130px;
     }
 }
+/* Tối ưu lại container chính */
+.auth-container {
+    background-color: #fff;
+    border-radius: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+    width: 100%; /* Co giãn theo màn hình */
+    max-width: 400px; /* Giới hạn độ rộng vừa phải cho mobile */
+    margin: 20px auto;
+    min-height: 550px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Sửa lỗi chữ đè nhau */
+.form-container {
+    padding: 40px;
+    text-align: center;
+}
+
+/* Làm nút Google gọn gàng hơn */
+.google-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    background: #000;
+    color: #fff;
+    border-radius: 5px;
+    padding: 12px;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+/* Đảm bảo input không bị lệch */
+input {
+    width: 100%;
+    margin: 10px 0;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
